@@ -8,17 +8,27 @@ latitude = list(volcanic_data["LAT"]) #extracting the latitude column and conver
 longitude = list(volcanic_data["LON"]) #extracting the longitude column and converting it into a list
 elevation = list(volcanic_data["ELEV"]) #extractin the elevation column into a list
 
+#makin a function to change marker colors with respect to their elevation
+def color_prod(elevation):
+    if elevation < 1000:
+        return 'green'
+    elif elevation >= 1000 and elevation < 3000:
+        return 'orange'
+    else:
+        return 'red'
+
+
 
 #creating an instance of the Map object provided by folium
 #and since map is a reserved keyword, so i'll have to use another variable name
-map1 = folium.Map(location=[30.375321, 69.345116], zoom_start=6, tiles="Stamen Terrain")
+map1 = folium.Map(location=[38.375321, -99.345116], zoom_start=6, tiles="Stamen Terrain")
 
 #making a feature group to add more layers/children to the map instance
 fg = folium.FeatureGroup(name="layer1")
 #making multiple markers for the volcanoes by looping through the latitude and longitude lists
 #also making the popups dynamic by pushing the elevation values in them
 for lat, lon, elev in zip(latitude, longitude, elevation):
-    fg.add_child(folium.Marker(location=[lat, lon], popup=str(elev)+"m", icon=folium.Icon(color="red")))
+    fg.add_child(folium.Marker(location=[lat, lon], popup=str(elev)+"m", icon=folium.Icon(color=color_prod(elev))))
 
 
 map1.add_child(fg)
