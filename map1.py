@@ -6,6 +6,7 @@ import pandas
 volcanic_data = pandas.read_csv("Volcanoes.txt")
 latitude = list(volcanic_data["LAT"]) #extracting the latitude column and converting it into a list
 longitude = list(volcanic_data["LON"]) #extracting the longitude column and converting it into a list
+elevation = list(volcanic_data["ELEV"]) #extractin the elevation column into a list
 
 
 #creating an instance of the Map object provided by folium
@@ -15,8 +16,9 @@ map1 = folium.Map(location=[30.375321, 69.345116], zoom_start=6, tiles="Stamen T
 #making a feature group to add more layers/children to the map instance
 fg = folium.FeatureGroup(name="layer1")
 #making multiple markers for the volcanoes by looping through the latitude and longitude lists
-for lat, lon in zip(latitude, longitude):
-    fg.add_child(folium.Marker(location=[lat, lon], popup="This is a volcano!", icon=folium.Icon(color="red")))
+#also making the popups dynamic by pushing the elevation values in them
+for lat, lon, elev in zip(latitude, longitude, elevation):
+    fg.add_child(folium.Marker(location=[lat, lon], popup=str(elev)+"m", icon=folium.Icon(color="red")))
 
 
 map1.add_child(fg)
