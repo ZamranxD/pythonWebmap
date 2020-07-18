@@ -28,7 +28,7 @@ fg = folium.FeatureGroup(name="layer1")
 #making multiple markers for the volcanoes by looping through the latitude and longitude lists
 #also making the popups dynamic by pushing the elevation values in them
 for lat, lon, elev in zip(latitude, longitude, elevation):
-    fg.add_child(folium.Marker(location=[lat, lon], popup=str(elev)+"m", icon=folium.Icon(color=color_prod(elev))))
+    fg.add_child(folium.CircleMarker(location=[lat, lon], radius=6, popup=str(elev)+"m", fill_color = color_prod(elev), color = 'grey', fill_opacity = 0.7))
 
 
 map1.add_child(fg)
